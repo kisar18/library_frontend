@@ -1,0 +1,41 @@
+[{
+  "_id": {
+    "$oid": "634af7c9ad3e4130306f98d9"
+  },
+  "name": "Ostře sledované vlaky",
+  "author": "Bohumil Hrabal",
+  "pages": 58,
+  "publication_year": 1965,
+  "image": null,
+  "quantity": 10
+},{
+  "_id": {
+    "$oid": "634af869ad3e4130306f98da"
+  },
+  "name": "Harry Potter a Kámen mudrců",
+  "author": "Joanne Rowlingová",
+  "pages": 288,
+  "publication_year": 1997,
+  "image": null,
+  "quantity": 10
+},{
+  "_id": {
+    "$oid": "634af8dbad3e4130306f98db"
+  },
+  "name": "Spalovač mrtvol",
+  "author": "Ladislav Fuks",
+  "pages": 137,
+  "publication_year": 1967,
+  "image": null,
+  "quantity": 10
+},{
+  "_id": {
+    "$oid": "634af937ad3e4130306f98dc"
+  },
+  "name": "Lakomec",
+  "author": "Moliére",
+  "pages": 120,
+  "publication_year": 1668,
+  "image": null,
+  "quantity": 10
+}]
