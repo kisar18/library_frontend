@@ -31,7 +31,7 @@ function Books() {
       alignItems: "center",
       flexDirection: "column"
     }}>
-      <TableContainer component={Paper} sx={{ width: "75%" }}>
+      <TableContainer component={Paper} sx={{ width: "75%", mt: 3 }}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead sx={{ backgroundColor: "black" }}>
             <TableRow>
@@ -39,8 +39,8 @@ function Books() {
               <TableCell sx={{ color: "white", textAlign: "center"  }} >Author</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center"  }} >Publication year</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center"  }} >Pages</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center"  }} >Image</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center"  }} >Quantity</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center"  }} >Url</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center"  }} >Edit</TableCell>
             </TableRow>
           </TableHead>
@@ -52,8 +52,8 @@ function Books() {
               >
                 <TableCell sx={{ textAlign: "center" }} component="th" scope="row">{book.name}</TableCell>
                 <TableCell sx={{ textAlign: "center" }}>{book.author}</TableCell>
-                <TableCell sx={{ textAlign: "center" }}>{book.pages}</TableCell>
                 <TableCell sx={{ textAlign: "center" }}>{book.publication_year}</TableCell>
+                <TableCell sx={{ textAlign: "center" }}>{book.pages}</TableCell>
                 <TableCell sx={{ textAlign: "center" }}>
                   <img 
                     src="https://covers.openlibrary.org/b/isbn/9789639307223-S.jpg"
