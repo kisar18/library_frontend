@@ -3,10 +3,12 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
-import axios from '../axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { useRegister } from "../hooks/useRegister";
 
 function RegistrationForm() {
+
+  const navigate = useNavigate();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -16,26 +18,13 @@ function RegistrationForm() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const {register, error, isLoading} = useRegister();
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const newUser = {
-      first_name: firstName,
-      last_name: lastName,
-      birth_number: birthNumber,
-      address: address,
-      username: username,
-      password: password
-    }
-
-    try {
-      const response = await axios.post('/library/customers', newUser);
-      console.log(response.data);
-    }
-    catch (error) {
-      console.log(error);
-    }
-
+    await register(firstName, lastName, birthNumber, address, username, password);
+    navigate("/profile");
   }
 
   return (
@@ -121,7 +110,8 @@ function RegistrationForm() {
           <Link to="/login">Sign in</Link>
         </Box>
         <Box sx={{ mt: 3 }}>
-          <Button type='submit' variant="contained" size="large">Register</Button>
+          <Button disabled={isLoading} type='submit' variant="contained" size="large">Register</Button>
+          {error && <div className="error">{error}</div>}
         </Box>
       </form>
     </Box>

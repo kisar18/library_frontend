@@ -3,16 +3,27 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useLogin } from "../hooks/useLogin";
 
 function LoginForm() {
 
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const {login, error, isLoading} = useLogin();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    await login(username, password);
+    navigate("/profile");
+  }
 
   return (
     <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
-      <form style={{ width:"75%" }}>
+      <form style={{ width:"75%" }} onSubmit={handleLogin}>
         <h1>Login</h1>
         <Box sx={{ mt: 3 }}>
           <TextField 
@@ -43,6 +54,7 @@ function LoginForm() {
         </Box>
         <Box sx={{ mt: 3 }}>
           <Button type='submit' variant="contained" size="large">Login</Button>
+          {error && <div className="error">{error}</div>}
         </Box>
       </form>
     </Box>

@@ -16,7 +16,7 @@ function Books() {
 
   useEffect(() => {
     async function fetchData() {
-      const req = await axios.get('/library/books');
+      const req = await axios.get('/books');
 
       setBooks(req.data);
     }
