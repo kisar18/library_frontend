@@ -5,10 +5,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import "./Navbar.css";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useLogout } from "../hooks/useLogout";
 
 function Navbar() {
 
   const { user } = useAuthContext();
+  const { logout } = useLogout();
+
+  const handleClick = () => {
+    logout();
+  }
 
   return (
     <Box>
@@ -16,24 +22,44 @@ function Navbar() {
         <Box sx={{ display: "flex", justifyContent: "space-around"}}>
           <Typography variant="h5" sx={{my: 1}}>
             <Link to="/" className='nav__link'>
-              {user ? user.username : "Home"}
+              Home
             </Link>
           </Typography>
-          <Typography variant="h5" sx={{my: 1}}>
-            <Link to="/login" className='nav__link'>
-              Login
+          {user && (
+            <Typography variant="h5" sx={{my: 1}}>
+            <Link to="/profile" className='nav__link'>
+              Profile
             </Link>
           </Typography>
-          <Typography variant="h5" sx={{my: 1}}>
-            <Link to="/register" className='nav__link'>
-              Register
-            </Link>
+          )}
+          {!user && (
+            <Typography variant="h5" sx={{my: 1}}>
+              <Link to="/login" className='nav__link'>
+                Login
+              </Link>
+            </Typography>
+          )}
+          {!user && (
+            <Typography variant="h5" sx={{my: 1}}>
+              <Link to="/register" className='nav__link'>
+                Register
+              </Link>
+            </Typography>
+          )}
+          {user && (
+            <Typography variant="h5" sx={{my: 1}}>
+              <Link to="/books" className='nav__link'>
+                Books
+              </Link>
+            </Typography>
+          )}
+          {user && (
+            <Typography variant="h5" sx={{my: 1}}>
+              <Link to="/" className='nav__link' onClick={handleClick}>
+                Logout
+              </Link>
           </Typography>
-          <Typography variant="h5" sx={{my: 1}}>
-            <Link to="/books" className='nav__link'>
-              Books
-            </Link>
-          </Typography>
+          )}
         </Box>
       </AppBar>
     </Box>

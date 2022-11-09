@@ -20,7 +20,7 @@ function Profile() {
   return( 
     <Box sx={{ mt: 2, width: "100%", textAlign: "center" }}>
       <Typography variant="h5">Profile: {user.username}</Typography>
-      <Button type="submit" variant="contained" size="large" onClick={handleClick}>Logout</Button>
+      <Button type="submit" variant="contained" size="large" sx={{ mt: 2 }} onClick={handleClick}>Logout</Button>
     </Box> 
   )
 }
