@@ -5,11 +5,13 @@ import LoginForm from './components/LoginForm';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Profile from './components/Profile';
 import HomePage from './components/HomePage';
+import Navbar from './components/Navbar';
 
 function App() {
 
   return (
     <BrowserRouter className="app">
+      <Navbar></Navbar>
       <Routes>
         <Route path='/' exact element={<HomePage />} />
         <Route path='/login' exact element={<LoginForm />} />
