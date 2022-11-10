@@ -6,27 +6,33 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Box from "@mui/material/Box";
-import axios from '../axios';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function Books() {
 
   const [books, setBooks] = useState([]);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     async function fetchData() {
-      const req = await axios.get('/books');
+      const response = await fetch('http://localhost:8001/books', {
+        headers: { 'Authorization': `Bearer ${user.token}` },
+      });
+      const json = await response.json();
 
-      setBooks(req.data);
+      setBooks(json);
     }
 
-    fetchData();
+    if (user) {
+      fetchData();
+    }
   }, []);
 
   return (
     <Box sx={{
-      display:"flex",
+      display: "flex",
       justifyContent: "center",
       alignItems: "center",
       flexDirection: "column"
@@ -37,7 +43,7 @@ function Books() {
             <TableRow>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>Book</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Author</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center" ,fontWeight: "bold", fontSize: "18px" }} >Publication year</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Publication year</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Pages</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Image</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Quantity</TableCell>
@@ -55,7 +61,7 @@ function Books() {
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.publication_year}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.pages}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>
-                  <img 
+                  <img
                     src="https://covers.openlibrary.org/b/isbn/9789639307223-S.jpg"
                     //src="https://images.pexels.com/photos/768125/pexels-photo-768125.jpeg?auto=compress&cs=tinysrgb&h=80"
                     alt="new"
@@ -71,7 +77,7 @@ function Books() {
         </Table>
       </TableContainer>
     </Box>
-  )
+  );
 }
 
 export default Books;
