@@ -15,3 +15,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.nav__link:hover {
+  background-color: rgb(119, 181, 243);
+}
+
+.nav__link {
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 5px;
+  border: 1px solid white;
+}
+
+.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid #e7195a;
+  color: #e7195a;
+  border-radius: 4px;
+  margin: 20px 0;
+  width: max-content;
+}
+
+.homepage__image {
+  border-radius: 15%;
+}

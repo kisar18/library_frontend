@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from '@mui/material/Typography';
-import "./HomePage.css";
+import "../index.css";
 
 function HomePage() {
   return (
