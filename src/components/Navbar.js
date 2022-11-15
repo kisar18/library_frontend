@@ -49,7 +49,7 @@ function Navbar() {
           {user && (
             <Typography variant="h5" sx={{ my: 1 }}>
               <Link to="/books" className='nav__link'>
-                Books
+                All books
               </Link>
             </Typography>
           )}

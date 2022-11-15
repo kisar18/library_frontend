@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Profile from './components/Profile';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
 
