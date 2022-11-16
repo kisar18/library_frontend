@@ -10,21 +10,16 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useBorrow } from "../hooks/useBorrow";
-import Pagination from "@mui/material/Pagination";
+import TablePagination from "@mui/material/TablePagination";
 
 function Books() {
 
-  const pageSize = 5;
   const [books, setBooks] = useState([]);
-  const [paginationBooks, setPaginationBooks] = useState([]);
-  const [pagination, setPagination] = useState({
-    count: 0,
-    from: 0,
-    to: pageSize
-  });
-
   const { user } = useAuthContext();
   const { borrow, error, isLoading } = useBorrow();
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     async function fetchData() {
@@ -34,9 +29,6 @@ function Books() {
       const json = await response.json();
 
       setBooks(json);
-      setPagination({ ...pagination, count: json.length });
-      setPaginationBooks(json.slice(0, 5));
-      console.log(paginationBooks);
     }
 
     if (user) {
@@ -48,11 +40,13 @@ function Books() {
     await borrow(_id);
   };
 
-  const handlePageChange = (e, page) => {
-    const from = (page - 1) * pageSize;
-    const to = (page - 1) * pageSize + pageSize;
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+  };
 
-    setPagination({ ...pagination, from: from, to: to });
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
@@ -76,7 +70,10 @@ function Books() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {books.map((book) => (
+            {(rowsPerPage > 0
+              ? books.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : books
+            ).map((book) => (
               <TableRow
                 key={book._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -101,7 +98,15 @@ function Books() {
           </TableBody>
         </Table>
         <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
-          <Pagination count={Math.ceil(pagination.count / pageSize)} onChange={handlePageChange} />
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={books.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handlePageChange}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Box>
         {error && <div className="error">{error}</div>}
       </TableContainer>

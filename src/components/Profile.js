@@ -7,14 +7,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Box from "@mui/material/Box";
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import TablePagination from "@mui/material/TablePagination";
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 function Profile() {
 
+  const [books, setBooks] = useState([]);
   const { user } = useAuthContext();
 
-  const [books, setBooks] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     async function fetchData() {
@@ -30,6 +34,15 @@ function Profile() {
       fetchData();
     }
   }, []);
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <Box sx={{ mt: 2, width: "100%", textAlign: "center" }}>
@@ -55,10 +68,14 @@ function Profile() {
                 <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Publication year</TableCell>
                 <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Pages</TableCell>
                 <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Image</TableCell>
+                <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Return</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {books.map((book) => (
+              {(rowsPerPage > 0
+                ? books.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : books
+              ).map((book) => (
                 <TableRow
                   key={book._id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -74,10 +91,24 @@ function Profile() {
                       alt="new"
                     />
                   </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <Button variant='contained' color='primary'>Return</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+          <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={books.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handlePageChange}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Box>
         </TableContainer>
       </Box>
     </Box>
