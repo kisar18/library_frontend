@@ -35,7 +35,7 @@ function Profile() {
     if (user) {
       fetchData();
     }
-  }, [books]);
+  }, [books, user]);
 
   const handleReturnBook = async (name) => {
     await returnBook(name);

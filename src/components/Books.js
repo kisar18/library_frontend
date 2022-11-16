@@ -34,7 +34,7 @@ function Books() {
     if (user) {
       fetchData();
     }
-  }, []);
+  }, [books, user]);
 
   const handleBorrow = async (_id) => {
     await borrow(_id);
@@ -91,7 +91,7 @@ function Books() {
                 </TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.quantity}</TableCell>
                 <TableCell sx={{ textAlign: "center" }}>
-                  <Button variant='contained' color='primary' onClick={() => handleBorrow(book._id)} disabled={isLoading}>Borrow</Button>
+                  <Button variant='contained' color='primary' onClick={() => handleBorrow(book._id)} disabled={isLoading || book.quantity === 0}>Borrow</Button>
                 </TableCell>
               </TableRow>
             ))}
