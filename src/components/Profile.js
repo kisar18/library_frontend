@@ -11,11 +11,13 @@ import Button from '@mui/material/Button';
 import TablePagination from "@mui/material/TablePagination";
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useReturnBook } from "../hooks/useReturnBook";
 
 function Profile() {
 
   const [books, setBooks] = useState([]);
   const { user } = useAuthContext();
+  const { returnBook, error, isLoading } = useReturnBook();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -33,7 +35,11 @@ function Profile() {
     if (user) {
       fetchData();
     }
-  }, []);
+  }, [books]);
+
+  const handleReturnBook = async (name) => {
+    await returnBook(name);
+  };
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -92,7 +98,7 @@ function Profile() {
                     />
                   </TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
-                    <Button variant='contained' color='primary'>Return</Button>
+                    <Button variant='contained' color='primary' onClick={() => handleReturnBook(book.name)} disabled={isLoading}>Return</Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -109,6 +115,7 @@ function Profile() {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Box>
+          {error && <div className="error">{error}</div>}
         </TableContainer>
       </Box>
     </Box>
