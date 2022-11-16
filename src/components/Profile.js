@@ -60,7 +60,7 @@ function Profile() {
             <TableBody>
               {books.map((book) => (
                 <TableRow
-                  key={book.name}
+                  key={book._id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell sx={{ textAlign: "center", fontSize: "16px" }} component="th" scope="row">{book.name}</TableCell>

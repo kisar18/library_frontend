@@ -30,6 +30,24 @@ function Books() {
     }
   }, []);
 
+  const handleBorrow = async (_id) => {
+
+    const response = await fetch('http://localhost:8001/user/', {
+      headers: { 'Authorization': `Bearer ${user.token}` },
+    });
+    const json = await response.json();
+
+    const username = json.username;
+
+    console.log(username, _id);
+
+    await fetch('http://localhost:8001/user/borrow', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, _id })
+    });
+  };
+
   return (
     <Box sx={{
       display: "flex",
@@ -53,7 +71,7 @@ function Books() {
           <TableBody>
             {books.map((book) => (
               <TableRow
-                key={book.name}
+                key={book._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }} component="th" scope="row">{book.name}</TableCell>
@@ -69,7 +87,7 @@ function Books() {
                 </TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.quantity}</TableCell>
                 <TableCell sx={{ textAlign: "center" }}>
-                  <Button variant='contained' color='primary'>Borrow</Button>
+                  <Button variant='contained' color='primary' onClick={() => handleBorrow(book._id)}>Borrow</Button>
                 </TableCell>
               </TableRow>
             ))}
