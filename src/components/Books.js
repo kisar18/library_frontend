@@ -9,11 +9,13 @@ import Box from "@mui/material/Box";
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useBorrow } from "../hooks/useBorrow";
 
 function Books() {
 
   const [books, setBooks] = useState([]);
   const { user } = useAuthContext();
+  const { borrow, error, isLoading } = useBorrow();
 
   useEffect(() => {
     async function fetchData() {
@@ -31,21 +33,7 @@ function Books() {
   }, []);
 
   const handleBorrow = async (_id) => {
-
-    const response = await fetch('http://localhost:8001/user/', {
-      headers: { 'Authorization': `Bearer ${user.token}` },
-    });
-    const json = await response.json();
-
-    const username = json.username;
-
-    console.log(username, _id);
-
-    await fetch('http://localhost:8001/user/borrow', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, _id })
-    });
+    await borrow(_id);
   };
 
   return (
@@ -87,12 +75,13 @@ function Books() {
                 </TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.quantity}</TableCell>
                 <TableCell sx={{ textAlign: "center" }}>
-                  <Button variant='contained' color='primary' onClick={() => handleBorrow(book._id)}>Borrow</Button>
+                  <Button variant='contained' color='primary' onClick={() => handleBorrow(book._id)} disabled={isLoading}>Borrow</Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        {error && <div className="error">{error}</div>}
       </TableContainer>
     </Box>
   );
