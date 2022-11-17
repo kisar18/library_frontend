@@ -11,6 +11,9 @@ import Paper from '@mui/material/Paper';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useBorrow } from "../hooks/useBorrow";
 import TablePagination from "@mui/material/TablePagination";
+import InputBase from '@mui/material/InputBase';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
 
 function Books() {
 
@@ -57,6 +60,19 @@ function Books() {
       flexDirection: "column"
     }}>
       <TableContainer component={Paper} sx={{ width: "75%", mt: 3 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+          <Paper
+            sx={{ display: 'flex', ml: 2, border: "1px solid black" }}
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1, fontSize: "20px" }}
+              placeholder="Search for a book"
+            />
+            <IconButton type="submit" sx={{ p: '8px' }}>
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+        </Box>
         <Table sx={{ minWidth: 650 }} size="medium">
           <TableHead sx={{ backgroundColor: "black" }}>
             <TableRow>
@@ -84,7 +100,8 @@ function Books() {
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.pages}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>
                   <img
-                    src="https://covers.openlibrary.org/b/isbn/9789639307223-S.jpg"
+                    src={book.image}
+                    //src="https://covers.openlibrary.org/b/isbn/9789513114725-S.jpg"
                     //src="https://images.pexels.com/photos/768125/pexels-photo-768125.jpeg?auto=compress&cs=tinysrgb&h=80"
                     alt="new"
                   />

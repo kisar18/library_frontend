@@ -16,6 +16,7 @@ import { useReturnBook } from "../hooks/useReturnBook";
 function Profile() {
 
   const [books, setBooks] = useState([]);
+  const [profile, setProfile] = useState({});
   const { user } = useAuthContext();
   const { returnBook, error, isLoading } = useReturnBook();
 
@@ -30,6 +31,7 @@ function Profile() {
       const json = await response.json();
 
       setBooks(json.books);
+      setProfile(json);
     }
 
     if (user) {
@@ -52,12 +54,9 @@ function Profile() {
 
   return (
     <Box sx={{ mt: 2, width: "100%", textAlign: "center" }}>
-      <Typography variant="h5" sx={{ my: 2 }}>Profile: {user.username}</Typography>
-      <Typography variant="h5" sx={{ my: 2 }}>First name: </Typography>
-      <Typography variant="h5" sx={{ my: 2 }}>Last name: </Typography>
-      <Typography variant="h5" sx={{ my: 2 }}>Birth number: </Typography>
-      <Typography variant="h5" sx={{ my: 2 }}>Address: </Typography>
-      <Typography variant="h5" sx={{ my: 2 }}>Borrowed books: </Typography>
+      <Typography variant="h3" sx={{ my: 1, fontFamily: "cursive" }}>{profile.first_name} {profile.last_name}</Typography>
+      <Typography variant="h5" sx={{ my: 1, fontFamily: "cursive" }}>{profile.address}</Typography>
+      <Typography variant="h5" sx={{ my: 1, fontFamily: "cursive", textDecoration: "underline" }}>↓ Borrowed books ↓</Typography>
 
       <Box sx={{
         display: "flex",
@@ -65,8 +64,8 @@ function Profile() {
         alignItems: "center",
         flexDirection: "column"
       }}>
-        <TableContainer component={Paper} sx={{ width: "75%", mt: 3 }}>
-          <Table sx={{ minWidth: 650 }} size="medium">
+        <TableContainer component={Paper} sx={{ width: "75%", mt: 2 }}>
+          <Table sx={{ minWidth: 650 }} size="small">
             <TableHead sx={{ backgroundColor: "black" }}>
               <TableRow>
                 <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>Book</TableCell>
