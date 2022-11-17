@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const useBorrow = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   const borrow = async (_id) => {
     setIsLoading(true);
@@ -33,6 +35,8 @@ export const useBorrow = () => {
       // Update loading state
       setIsLoading(false);
 
+      // Navigate user to his profile
+      navigate("/profile");
     }
   };
 

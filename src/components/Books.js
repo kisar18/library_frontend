@@ -21,35 +21,37 @@ function Books() {
   const { user } = useAuthContext();
   const { borrow, error, isLoading } = useBorrow();
 
-  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [booksCount, setBooksCount] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('http://localhost:8001/books', {
+      const response = await fetch(`http://localhost:8001/books?page=${pageNumber}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();
 
       setBooks(json.books);
+      setBooksCount(json.total);
     }
 
     if (user) {
       fetchData();
     }
-  }, [books, user]);
+  }, [user, pageNumber]);
 
   const handleBorrow = async (_id) => {
     await borrow(_id);
   };
 
   const handlePageChange = (event, newPage) => {
-    setPage(newPage);
+    setPageNumber(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setPageNumber(0);
   };
 
   return (
@@ -86,10 +88,7 @@ function Books() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0
-              ? books.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : books
-            ).map((book) => (
+            {books.map((book) => (
               <TableRow
                 key={book._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -118,9 +117,9 @@ function Books() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={books.length}
+            count={booksCount}
             rowsPerPage={rowsPerPage}
-            page={page}
+            page={pageNumber}
             onPageChange={handlePageChange}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
