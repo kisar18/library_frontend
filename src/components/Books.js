@@ -31,7 +31,7 @@ function Books() {
       });
       const json = await response.json();
 
-      setBooks(json);
+      setBooks(json.books);
     }
 
     if (user) {

@@ -17,24 +17,24 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route
-          path='/'
-          exact element={<HomePage />}
+          exact path='/'
+          element={<HomePage />}
         />
         <Route
-          path='/login'
-          exact element={!user ? <LoginForm /> : <Navigate to="/" />}
+          exact path='/login'
+          element={!user ? <LoginForm /> : <Navigate to="/" />}
         />
         <Route
-          path='/register'
-          exact element={!user ? <RegistrationForm /> : <Navigate to="/" />}
+          exact path='/register'
+          element={!user ? <RegistrationForm /> : <Navigate to="/" />}
         />
         <Route
-          path='/books'
-          exact element={user ? <Books /> : <Navigate to="/login" />}
+          exact path='/books'
+          element={user ? <Books /> : <Navigate to="/login" />}
         />
         <Route
-          path='/profile'
-          exact element={user ? <Profile /> : <Navigate to="/login" />}
+          exact path='/profile'
+          element={user ? <Profile /> : <Navigate to="/login" />}
         />
       </Routes>
     </BrowserRouter>

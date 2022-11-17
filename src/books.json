@@ -1,41 +1,123 @@
-[{
-  "_id": {
-    "$oid": "634af7c9ad3e4130306f98d9"
+[
+  {
+    "_id": {
+      "$oid": "634af869ad3e4130306f98da"
+    },
+    "name": "Harry Potter a Kámen mudrců",
+    "author": "Joanne Rowling",
+    "pages": 288,
+    "publication_year": 1997,
+    "image": "https://covers.openlibrary.org/b/isbn/9789639307223-S.jpg",
+    "quantity": 10
   },
-  "name": "Ostře sledované vlaky",
-  "author": "Bohumil Hrabal",
-  "pages": 58,
-  "publication_year": 1965,
-  "image": null,
-  "quantity": 10
-},{
-  "_id": {
-    "$oid": "634af869ad3e4130306f98da"
+  {
+    "_id": {
+      "$oid": "63760329b4f604809c433471"
+    },
+    "name": "Harry Potter a Tajemná komnata",
+    "author": "Joanne Rowling",
+    "pages": 289,
+    "publication_year": 1998,
+    "image": "https://covers.openlibrary.org/b/isbn/9789513114725-S.jpg",
+    "quantity": 5
   },
-  "name": "Harry Potter a Kámen mudrců",
-  "author": "Joanne Rowlingová",
-  "pages": 288,
-  "publication_year": 1997,
-  "image": null,
-  "quantity": 10
-},{
-  "_id": {
-    "$oid": "634af8dbad3e4130306f98db"
+  {
+    "_id": {
+      "$oid": "63760405b4f604809c433472"
+    },
+    "name": "Harry Potter a vězeň z Azkabanu",
+    "author": "Joanne Rowling",
+    "pages": 435,
+    "publication_year": 1999,
+    "image": "https://covers.openlibrary.org/b/isbn/9780439136358-S.jpg",
+    "quantity": 5
   },
-  "name": "Spalovač mrtvol",
-  "author": "Ladislav Fuks",
-  "pages": 137,
-  "publication_year": 1967,
-  "image": null,
-  "quantity": 10
-},{
-  "_id": {
-    "$oid": "634af937ad3e4130306f98dc"
+  {
+    "_id": {
+      "$oid": "6376058ab4f604809c433473"
+    },
+    "name": "Harry Potter a Ohnivý pohár",
+    "author": "Joanne Rowling",
+    "pages": 571,
+    "publication_year": 2000,
+    "image": "https://covers.openlibrary.org/b/isbn/9780613496742-S.jpg",
+    "quantity": 5
   },
-  "name": "Lakomec",
-  "author": "Moliére",
-  "pages": 120,
-  "publication_year": 1668,
-  "image": null,
-  "quantity": 10
-}]
+  {
+    "_id": {
+      "$oid": "6376062fb4f604809c433474"
+    },
+    "name": "Harry Potter a Fénixův řád",
+    "author": "Joanne Rowling",
+    "pages": 800,
+    "publication_year": 2003,
+    "image": "https://covers.openlibrary.org/b/isbn/9789955084334-S.jpg",
+    "quantity": 5
+  },
+  {
+    "_id": {
+      "$oid": "637606f8b4f604809c433475"
+    },
+    "name": "Harry Potter a princ dvojí krve",
+    "author": "Joanne Rowling",
+    "pages": 532,
+    "publication_year": 2005,
+    "image": "https://covers.openlibrary.org/b/isbn/9780439784542-S.jpg",
+    "quantity": "5"
+  },
+  {
+    "_id": {
+      "$oid": "6376079ab4f604809c433476"
+    },
+    "name": "Harry Potter a relikvie smrti",
+    "author": "Joanne Rowling",
+    "pages": 626,
+    "publication_year": 2007,
+    "image": "https://covers.openlibrary.org/b/isbn/9788884518781-S.jpg",
+    "quantity": 5
+  },
+  {
+    "_id": {
+      "$oid": "634af7c9ad3e4130306f98d9"
+    },
+    "name": "Ostře sledované vlaky",
+    "author": "Bohumil Hrabal",
+    "pages": 58,
+    "publication_year": 1965,
+    "image": "https://covers.openlibrary.org/b/isbn/9782070375295-S.jpg",
+    "quantity": 7
+  },
+  {
+    "_id": {
+      "$oid": "63760997b4f604809c433478"
+    },
+    "name": "Farma zvířat",
+    "author": "George Orwell",
+    "pages": 104,
+    "publication_year": 1945,
+    "image": "https://covers.openlibrary.org/b/isbn/9781943138425-S.jpg",
+    "quantity": 5
+  },
+  {
+    "_id": {
+      "$oid": "63760aaab4f604809c433479"
+    },
+    "name": "O myších a lidech",
+    "author": "John Steinbeck",
+    "pages": 112,
+    "publication_year": 1937,
+    "image": "https://covers.openlibrary.org/b/isbn/9780142000670-S.jpg",
+    "quantity": 5
+  },
+  {
+    "_id": {
+      "$oid": "63760c15b4f604809c43347b"
+    },
+    "name": "Malý princ",
+    "author": "Antoine de Saint-Exupéry",
+    "pages": 83,
+    "publication_year": 1943,
+    "image": "https://ia800606.us.archive.org/view_archive.php?archive=/9/items/olcovers11/olcovers11-S.zip&file=115508-S.jpg",
+    "quantity": 5
+  }
+]
