@@ -24,10 +24,11 @@ function Books() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [pageNumber, setPageNumber] = useState(0);
   const [booksCount, setBooksCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:8001/books?page=${pageNumber}`, {
+      const response = await fetch(`http://localhost:8001/books?page=${pageNumber}&q=${searchTerm}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();
@@ -39,7 +40,7 @@ function Books() {
     if (user) {
       fetchData();
     }
-  }, [user, pageNumber]);
+  }, [user, pageNumber, searchTerm]);
 
   const handleBorrow = async (_id) => {
     await borrow(_id);
@@ -67,6 +68,7 @@ function Books() {
             sx={{ display: 'flex', ml: 2, border: "1px solid black" }}
           >
             <InputBase
+              onChange={e => setSearchTerm(e.target.value)}
               sx={{ ml: 1, flex: 1, fontSize: "20px" }}
               placeholder="Search for a book"
             />
