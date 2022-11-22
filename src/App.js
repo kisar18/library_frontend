@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Profile from './components/Profile';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
+import Users from "./components/Users";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
@@ -27,6 +28,10 @@ function App() {
         <Route
           exact path='/register'
           element={!user ? <RegistrationForm /> : <Navigate to="/" />}
+        />
+        <Route
+          exact path='/users'
+          element={user && user.username === "admin" ? <Users /> : <Navigate to="/" />}
         />
         <Route
           exact path='/books'

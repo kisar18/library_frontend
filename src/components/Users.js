@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,45 +6,38 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Box from "@mui/material/Box";
-import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { useAuthContext } from "../hooks/useAuthContext";
-import { useBorrow } from "../hooks/useBorrow";
 import TablePagination from "@mui/material/TablePagination";
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
-function Books() {
 
-  const [books, setBooks] = useState([]);
+function Users() {
   const { user } = useAuthContext();
-  const { borrow, error, isLoading } = useBorrow();
+  const [users, setUsers] = useState([]);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [pageNumber, setPageNumber] = useState(0);
-  const [booksCount, setBooksCount] = useState(0);
+  const [usersCount, setUsersCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:8001/books?page=${pageNumber}&q=${searchTerm}`, {
+      const response = await fetch(`http://localhost:8001/user?page=${pageNumber}&q=${searchTerm}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();
 
-      setBooks(json.books);
-      setBooksCount(json.total);
+      setUsers(json.users);
+      setUsersCount(json.total);
     }
 
     if (user) {
       fetchData();
     }
   }, [user, pageNumber, searchTerm]);
-
-  const handleBorrow = async (_id) => {
-    await borrow(_id);
-  };
 
   const handlePageChange = (event, newPage) => {
     setPageNumber(newPage);
@@ -80,37 +73,24 @@ function Books() {
         <Table sx={{ minWidth: 650 }} size="medium">
           <TableHead sx={{ backgroundColor: "black" }}>
             <TableRow>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>Book</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Author</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Publication year</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Pages</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Image</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Quantity</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Borrow</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>User</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >First name</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Last name</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Birth number</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Address</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {books.map((book) => (
+            {users.map((user) => (
               <TableRow
-                key={book._id}
+                key={user._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell sx={{ textAlign: "center", fontSize: "16px" }} component="th" scope="row">{book.name}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.author}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.publication_year}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.pages}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>
-                  <img
-                    src={book.image}
-                    //src="https://covers.openlibrary.org/b/isbn/9789513114725-S.jpg"
-                    //src="https://images.pexels.com/photos/768125/pexels-photo-768125.jpeg?auto=compress&cs=tinysrgb&h=80"
-                    alt="new"
-                  />
-                </TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.quantity}</TableCell>
-                <TableCell sx={{ textAlign: "center" }}>
-                  <Button variant='contained' color='primary' onClick={() => handleBorrow(book._id)} disabled={isLoading || book.quantity === 0}>Borrow</Button>
-                </TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "16px" }} component="th" scope="row">{user.username}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.first_name}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.last_name}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.birth_number}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.address}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -119,17 +99,16 @@ function Books() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={booksCount}
+            count={usersCount}
             rowsPerPage={rowsPerPage}
             page={pageNumber}
             onPageChange={handlePageChange}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Box>
-        {error && <div className="error">{error}</div>}
       </TableContainer>
     </Box>
   );
 }
 
-export default Books;
+export default Users;

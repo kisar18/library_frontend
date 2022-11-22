@@ -13,7 +13,7 @@ export const useBorrow = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch('http://localhost:8001/user/', {
+    const response = await fetch(`http://localhost:8001/user/${user.username}`, {
       headers: { 'Authorization': `Bearer ${user.token}` },
     });
     const json = await response.json();

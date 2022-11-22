@@ -46,6 +46,13 @@ function Navbar() {
               </Link>
             </Typography>
           )}
+          {user && user.username === "admin" && (
+            <Typography variant="h5" sx={{ my: 1 }}>
+              <Link to="/users" className='nav__link'>
+                Users
+              </Link>
+            </Typography>
+          )}
           {user && (
             <Typography variant="h5" sx={{ my: 1 }}>
               <Link to="/books" className='nav__link'>

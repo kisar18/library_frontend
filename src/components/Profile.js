@@ -25,19 +25,20 @@ function Profile() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('http://localhost:8001/user/', {
+      const response = await fetch(`http://localhost:8001/user/${user.username}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();
 
       setBooks(json.books);
       setProfile(json);
+      //console.log(json);
     }
 
     if (user) {
       fetchData();
     }
-  }, [books, user]);
+  }, [user]);
 
   const handleReturnBook = async (name) => {
     await returnBook(name);
@@ -64,7 +65,7 @@ function Profile() {
         alignItems: "center",
         flexDirection: "column"
       }}>
-        <TableContainer component={Paper} sx={{ width: "75%", mt: 2 }}>
+        <TableContainer component={Paper} sx={{ width: "100%", mt: 2 }}>
           <Table sx={{ minWidth: 650 }} size="small">
             <TableHead sx={{ backgroundColor: "black" }}>
               <TableRow>
