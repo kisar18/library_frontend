@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
+import { useBooksContext } from './useBooksContext';
 
 export const useReturnBook = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
   const { user } = useAuthContext();
+  const { dispatch } = useBooksContext();
 
   const returnBook = async (name) => {
     setIsLoading(true);
@@ -16,7 +18,7 @@ export const useReturnBook = () => {
     });
     const json = await response.json();
 
-    const username = json.username;
+    const username = json.user.username;
 
     const response2 = await fetch('http://localhost:8001/user/returnBook', {
       method: 'POST',
@@ -32,6 +34,8 @@ export const useReturnBook = () => {
     if (response2.ok) {
       // Update loading state
       setIsLoading(false);
+
+      dispatch({ type: 'SET_BOOKS', payload: json2.userBooks });
     }
   };
 

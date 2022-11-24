@@ -14,10 +14,11 @@ import TablePagination from "@mui/material/TablePagination";
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import { useBooksContext } from "../hooks/useBooksContext";
 
 function Books() {
 
-  const [books, setBooks] = useState([]);
+  const { books, dispatch } = useBooksContext();
   const { user } = useAuthContext();
   const { borrow, error, isLoading } = useBorrow();
 
@@ -33,7 +34,8 @@ function Books() {
       });
       const json = await response.json();
 
-      setBooks(json.books);
+      dispatch({ type: 'SET_BOOKS', payload: json.books });
+
       setBooksCount(json.total);
     }
 
@@ -90,7 +92,7 @@ function Books() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {books.map((book) => (
+            {books && books.map((book) => (
               <TableRow
                 key={book._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

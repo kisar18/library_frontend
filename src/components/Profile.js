@@ -11,46 +11,50 @@ import Button from '@mui/material/Button';
 import TablePagination from "@mui/material/TablePagination";
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useBooksContext } from "../hooks/useBooksContext";
 import { useReturnBook } from "../hooks/useReturnBook";
 
 function Profile() {
 
-  const [books, setBooks] = useState([]);
+  const { books, dispatch } = useBooksContext();
   const [profile, setProfile] = useState({});
   const { user } = useAuthContext();
   const { returnBook, error, isLoading } = useReturnBook();
 
-  const [page, setPage] = useState(0);
+  const [pageNumber, setPageNumber] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [booksCount, setBooksCount] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:8001/user/${user.username}`, {
+      const response = await fetch(`http://localhost:8001/user/${user.username}?page=${pageNumber}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();
 
-      setBooks(json.books);
-      setProfile(json);
-      //console.log(json);
+      dispatch({ type: 'SET_BOOKS', payload: json.books });
+
+      setProfile(json.user);
+      setBooksCount(json.total);
     }
 
     if (user) {
       fetchData();
     }
-  }, [user]);
+  }, [user, pageNumber, dispatch]);
 
   const handleReturnBook = async (name) => {
     await returnBook(name);
+    setBooksCount(booksCount - 1);
   };
 
   const handlePageChange = (event, newPage) => {
-    setPage(newPage);
+    setPageNumber(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setPageNumber(0);
   };
 
   return (
@@ -78,10 +82,7 @@ function Profile() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {(rowsPerPage > 0
-                ? books.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : books
-              ).map((book) => (
+              {books && books.map((book) => (
                 <TableRow
                   key={book._id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -92,8 +93,7 @@ function Profile() {
                   <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.pages}</TableCell>
                   <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>
                     <img
-                      src="https://covers.openlibrary.org/b/isbn/9789639307223-S.jpg"
-                      //src="https://images.pexels.com/photos/768125/pexels-photo-768125.jpeg?auto=compress&cs=tinysrgb&h=80"
+                      src={book.image}
                       alt="new"
                     />
                   </TableCell>
@@ -108,9 +108,9 @@ function Profile() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={books.length}
+              count={booksCount}
               rowsPerPage={rowsPerPage}
-              page={page}
+              page={pageNumber}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />

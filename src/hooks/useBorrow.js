@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useBooksContext } from './useBooksContext';
 
 export const useBorrow = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
   const { user } = useAuthContext();
-  const navigate = useNavigate();
+  const { dispatch } = useBooksContext();
 
   const borrow = async (_id) => {
     setIsLoading(true);
@@ -18,7 +18,7 @@ export const useBorrow = () => {
     });
     const json = await response.json();
 
-    const username = json.username;
+    const username = json.user.username;
 
     const response2 = await fetch('http://localhost:8001/user/borrow', {
       method: 'POST',
@@ -35,8 +35,7 @@ export const useBorrow = () => {
       // Update loading state
       setIsLoading(false);
 
-      // Navigate user to his profile
-      navigate("/profile");
+      dispatch({ type: 'SET_BOOKS', payload: json2.books });
     }
   };
 
