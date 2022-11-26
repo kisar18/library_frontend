@@ -6,13 +6,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Paper from '@mui/material/Paper';
 import { useAuthContext } from "../hooks/useAuthContext";
 import TablePagination from "@mui/material/TablePagination";
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-
+import { Link } from 'react-router-dom';
 
 function Users() {
   const { user } = useAuthContext();
@@ -107,6 +108,13 @@ function Users() {
           />
         </Box>
       </TableContainer>
+      {user && user.username === "admin" &&
+        <Box>
+          <Button sx={{ mt: 3 }} variant='contained' color="info" size="large">
+            <Link to="/register" className='userspage__add'>Add new user</Link>
+          </Button>
+        </Box>
+      }
     </Box>
   );
 }

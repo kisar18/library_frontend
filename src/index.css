@@ -41,3 +41,10 @@ code {
 .homepage__image {
   border-radius: 15%;
 }
+
+.userspage__add,
+.bookspage__add {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}

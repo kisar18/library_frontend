@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { useAuthContext } from './useAuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export const useRegister = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const { dispatch } = useAuthContext();
 
   const navigate = useNavigate();
 
@@ -25,17 +23,12 @@ export const useRegister = () => {
       setError(json.error);
     }
     if (response.ok) {
-      // Save the user to local storage
-      localStorage.setItem('user', JSON.stringify(json));
-
-      // Update the auth context
-      dispatch({ type: 'LOGIN', payload: json });
 
       // Update loading state
       setIsLoading(false);
 
       // Navigate user to his profile
-      navigate("/profile");
+      navigate("/");
     }
   };
 

@@ -15,6 +15,7 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { useBooksContext } from "../hooks/useBooksContext";
+import { Link } from 'react-router-dom';
 
 function Books() {
 
@@ -130,6 +131,13 @@ function Books() {
         </Box>
         {error && <div className="error">{error}</div>}
       </TableContainer>
+      {user && user.username === "admin" &&
+        <Box>
+          <Button sx={{ mt: 3 }} variant='contained' color="info" size="large">
+            <Link to="/createBook" className='bookspage__add'>Add new book</Link>
+          </Button>
+        </Box>
+      }
     </Box>
   );
 }

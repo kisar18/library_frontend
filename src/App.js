@@ -7,6 +7,7 @@ import Profile from './components/Profile';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
 import Users from "./components/Users";
+import CreateBookForm from "./components/CreateBookForm";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
         />
         <Route
           exact path='/register'
-          element={!user ? <RegistrationForm /> : <Navigate to="/" />}
+          element={!user || user.username === "admin" ? <RegistrationForm /> : <Navigate to="/" />}
         />
         <Route
           exact path='/users'
@@ -40,6 +41,10 @@ function App() {
         <Route
           exact path='/profile'
           element={user ? <Profile /> : <Navigate to="/login" />}
+        />
+        <Route
+          exact path='/createBook'
+          element={user && user.username === "admin" ? <CreateBookForm /> : <Navigate to="/" />}
         />
       </Routes>
     </BrowserRouter>
