@@ -26,19 +26,20 @@ function Users() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:8001/user?page=${pageNumber}&q=${searchTerm}`, {
+      const response = await fetch(`http://localhost:8001/user?page=${pageNumber}&q=${searchTerm}&ps=${rowsPerPage}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();
 
       setUsers(json.users);
       setUsersCount(json.total);
+      setRowsPerPage(json.PAGESIZE)
     }
 
     if (user) {
       fetchData();
     }
-  }, [user, pageNumber, searchTerm]);
+  }, [user, pageNumber, searchTerm, rowsPerPage]);
 
   const handlePageChange = (event, newPage) => {
     setPageNumber(newPage);

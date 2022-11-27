@@ -30,7 +30,7 @@ function Books() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:8001/books?page=${pageNumber}&q=${searchTerm}`, {
+      const response = await fetch(`http://localhost:8001/books?page=${pageNumber}&q=${searchTerm}&ps=${rowsPerPage}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();
@@ -38,12 +38,13 @@ function Books() {
       dispatch({ type: 'SET_BOOKS', payload: json.books });
 
       setBooksCount(json.total);
+      setRowsPerPage(json.PAGESIZE);
     }
 
     if (user) {
       fetchData();
     }
-  }, [user, pageNumber, searchTerm]);
+  }, [user, pageNumber, searchTerm, rowsPerPage]);
 
   const handleBorrow = async (_id) => {
     await borrow(_id);
