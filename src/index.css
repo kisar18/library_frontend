@@ -49,7 +49,8 @@ code {
 }
 
 .userspage__add,
-.bookspage__add {
+.bookspage__add,
+.bookspage__edit {
   text-decoration: none;
   color: white;
   font-weight: bold;

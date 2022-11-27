@@ -11,6 +11,8 @@ import Navbar from './components/Navbar';
 import MobileMenu from './components/MobileMenu';
 import Users from "./components/Users";
 import CreateBookForm from "./components/CreateBookForm";
+import EditBookForm from "./components/EditBookForm";
+import DeleteBook from "./components/DeleteBook";
 
 function App() {
 
@@ -63,6 +65,14 @@ function App() {
         <Route
           exact path='/createBook'
           element={user && user.username === "admin" ? <CreateBookForm /> : <Navigate to="/" />}
+        />
+        <Route
+          exact path='/editBook'
+          element={user && user.username === "admin" ? <EditBookForm /> : <Navigate to="/" />}
+        />
+        <Route
+          exact path='/deleteBook'
+          element={user && user.username === "admin" ? <DeleteBook /> : <Navigate to="/" />}
         />
       </Routes>
     </BrowserRouter>

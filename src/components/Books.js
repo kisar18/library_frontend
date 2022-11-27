@@ -16,8 +16,11 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { useBooksContext } from "../hooks/useBooksContext";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Books() {
+
+  const navigate = useNavigate();
 
   const { books, dispatch } = useBooksContext();
   const { user } = useAuthContext();
@@ -48,6 +51,23 @@ function Books() {
 
   const handleBorrow = async (_id) => {
     await borrow(_id);
+  };
+
+  const handleEdit = async (_id) => {
+    navigate("/editBook", {
+      state: {
+        bookId: _id
+      }
+    });
+  };
+
+  const handleDelete = async (_id, name) => {
+    navigate("/deleteBook", {
+      state: {
+        bookId: _id,
+        bookName: name
+      }
+    });
   };
 
   const handlePageChange = (event, newPage) => {
@@ -91,6 +111,7 @@ function Books() {
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Image</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Quantity</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Borrow</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Edit / Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -115,6 +136,27 @@ function Books() {
                 <TableCell sx={{ textAlign: "center" }}>
                   <Button variant='contained' color='primary' onClick={() => handleBorrow(book._id)} disabled={isLoading || book.quantity === 0}>Borrow</Button>
                 </TableCell>
+                {user && user.username === "admin" &&
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <Button
+                      variant='contained'
+                      color='info'
+                      onClick={() => handleEdit(book._id)}
+                      disabled={isLoading || book.quantity === 0}
+                      sx={{ mr: { xs: 0, lg: 2 }, mb: { xs: 2, lg: 0 } }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant='contained'
+                      color='error'
+                      onClick={() => handleDelete(book._id, book.name)}
+                      disabled={isLoading || book.quantity === 0}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                }
               </TableRow>
             ))}
           </TableBody>
