@@ -1,22 +1,40 @@
 import './App.css';
+import { useState } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { useAuthContext } from "./hooks/useAuthContext";
 import Books from "./components/Books";
 import RegistrationForm from './components/RegistrationForm';
 import LoginForm from './components/LoginForm';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Profile from './components/Profile';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
+import MobileMenu from './components/MobileMenu';
 import Users from "./components/Users";
 import CreateBookForm from "./components/CreateBookForm";
-import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
 
   const { user } = useAuthContext();
 
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+
+  const showMobileMenu = () => {
+    setMobileMenuVisible(true);
+  };
+
+  const closeMobileMenu = () => {
+    if (mobileMenuVisible) {
+      setMobileMenuVisible(false);
+    }
+  };
+
   return (
     <BrowserRouter className="app">
-      <Navbar></Navbar>
+      <Navbar
+        onShowMobileMenu={showMobileMenu}
+        onCloseMobileMenu={closeMobileMenu}
+      />
+      {mobileMenuVisible && (<MobileMenu onCloseMobileMenu={closeMobileMenu} />)}
       <Routes>
         <Route
           exact path='/'

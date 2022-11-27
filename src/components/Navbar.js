@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 import "../index.css";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogout";
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
-function Navbar() {
+function Navbar(props) {
 
   const { user } = useAuthContext();
   const { logout } = useLogout();
@@ -18,8 +20,8 @@ function Navbar() {
 
   return (
     <Box>
-      <AppBar position="static">
-        <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+      <AppBar position="static" onClick={() => props.onCloseMobileMenu()}>
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: "space-around" }}>
           <Typography variant="h5" sx={{ my: 1 }}>
             <Link to="/" className='nav__link'>
               Home
@@ -67,6 +69,15 @@ function Navbar() {
               </Link>
             </Typography>
           )}
+        </Box>
+        <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: "space-between", backgroundColor: "#1976d2" }}>
+          <Typography variant="h5" sx={{ my: 1, mx: 3 }}>Menu</Typography>
+          <IconButton
+            size="large"
+            onClick={() => props.onShowMobileMenu()}
+          >
+            <MenuIcon sx={{ color: "white" }} />
+          </IconButton>
         </Box>
       </AppBar>
     </Box>
