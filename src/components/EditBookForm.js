@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLocation } from 'react-router-dom';
 import { useEditBook } from "../hooks/useEditBook";
+import Typography from "@mui/material/Typography";
 
 function EditBookForm() {
 
@@ -118,6 +119,7 @@ function EditBookForm() {
         <Box sx={{ mt: 3 }}>
           <Button disabled={isLoading} type='submit' variant="contained" size="large">Edit</Button>
         </Box>
+        <Typography variant="h6">By editing book you edit her for all other users</Typography>
       </form>
     </Box>
   );

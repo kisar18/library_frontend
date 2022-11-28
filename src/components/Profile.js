@@ -46,6 +46,7 @@ function Profile() {
   const handleReturnBook = async (name) => {
     await returnBook(name);
     setBooksCount(booksCount - 1);
+    setPageNumber(0);
   };
 
   const handlePageChange = (event, newPage) => {

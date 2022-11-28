@@ -51,6 +51,7 @@ function Books() {
 
   const handleBorrow = async (_id) => {
     await borrow(_id);
+    setPageNumber(0);
   };
 
   const handleEdit = async (_id) => {
