@@ -13,6 +13,7 @@ import Users from "./components/Users";
 import CreateBookForm from "./components/CreateBookForm";
 import EditBookForm from "./components/EditBookForm";
 import DeleteBook from "./components/DeleteBook";
+import History from './components/History';
 
 function App() {
 
@@ -73,6 +74,10 @@ function App() {
         <Route
           exact path='/deleteBook'
           element={user && user.username === "admin" ? <DeleteBook /> : <Navigate to="/" />}
+        />
+        <Route
+          exact path='/history'
+          element={user && user.username === "admin" ? <History /> : <Navigate to="/" />}
         />
       </Routes>
     </BrowserRouter>

@@ -69,6 +69,13 @@ function Navbar(props) {
               </Link>
             </Typography>
           )}
+          {user && user.username === "admin" && (
+            <Typography variant="h5" sx={{ my: 1 }}>
+              <Link to="/history" className='nav__link'>
+                History
+              </Link>
+            </Typography>
+          )}
         </Box>
         <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: "space-between", backgroundColor: "#1976d2" }}>
           <Typography variant="h5" sx={{ my: 1, mx: 3 }}>Menu</Typography>
