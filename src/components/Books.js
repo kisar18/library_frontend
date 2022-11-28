@@ -127,7 +127,7 @@ function Books() {
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>
                   <img
                     src={book.image}
-                    //src="https://covers.openlibrary.org/b/isbn/9789513114725-S.jpg"
+                    //src="https://covers.openlibrary.org/b/isbn/9513114724-S.jpg"
                     //src="https://images.pexels.com/photos/768125/pexels-photo-768125.jpeg?auto=compress&cs=tinysrgb&h=80"
                     alt="new"
                   />
