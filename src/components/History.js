@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from "@mui/material/Box";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,14 +16,29 @@ import { useAuthContext } from "../hooks/useAuthContext";
 function History() {
 
   const { user } = useAuthContext();
+  const [historyItems, setHistoryItems] = useState([]);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [pageNumber, setPageNumber] = useState(0);
   const [historyCount, setHistoryCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const error = "Error";
-  const isLoading = false;
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`http://localhost:8001/histories?page=${pageNumber}&q=${searchTerm}&ps=${rowsPerPage}`, {
+        headers: { 'Authorization': `Bearer ${user.token}` },
+      });
+      const json = await response.json();
+
+      setHistoryItems(json.historyItems);
+      setHistoryCount(json.total);
+      setRowsPerPage(json.PAGESIZE);
+    }
+
+    if (user) {
+      fetchData();
+    }
+  }, [user, pageNumber, searchTerm, rowsPerPage]);
 
   const handlePageChange = (event, newPage) => {
     setPageNumber(newPage);
@@ -44,7 +59,7 @@ function History() {
             <InputBase
               onChange={e => setSearchTerm(e.target.value)}
               sx={{ ml: 1, flex: 1, fontSize: "20px" }}
-              placeholder="Search for a book"
+              placeholder="Search for a item"
             />
             <IconButton type="submit" sx={{ p: '8px' }}>
               <SearchIcon />
@@ -60,13 +75,16 @@ function History() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell sx={{ textAlign: "center", fontSize: "16px" }} component="th" scope="row">Date 1</TableCell>
-              <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>Book 1</TableCell>
-              <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>User 1</TableCell>
-            </TableRow>
+            {historyItems && historyItems.map((item) => (
+              <TableRow
+                key={item._id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell sx={{ textAlign: "center", fontSize: "16px", width: "33%" }} component="th" scope="row">{item.createdAt}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "16px", width: "33%" }}>{item.user}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "16px", width: "33%" }}>{item.book}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
         <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
@@ -80,7 +98,6 @@ function History() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Box>
-        {error && <div className="error">{error}</div>}
       </TableContainer>
     </Box>
   );

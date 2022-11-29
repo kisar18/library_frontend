@@ -33,7 +33,7 @@ function Users() {
 
       setUsers(json.users);
       setUsersCount(json.total);
-      setRowsPerPage(json.PAGESIZE)
+      setRowsPerPage(json.PAGESIZE);
     }
 
     if (user) {
@@ -65,7 +65,7 @@ function Users() {
             <InputBase
               onChange={e => setSearchTerm(e.target.value)}
               sx={{ ml: 1, flex: 1, fontSize: "20px" }}
-              placeholder="Search for a book"
+              placeholder="Search for a user"
             />
             <IconButton type="submit" sx={{ p: '8px' }}>
               <SearchIcon />

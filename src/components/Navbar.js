@@ -48,13 +48,6 @@ function Navbar(props) {
               </Link>
             </Typography>
           )}
-          {user && user.username === "admin" && (
-            <Typography variant="h5" sx={{ my: 1 }}>
-              <Link to="/users" className='nav__link'>
-                Users
-              </Link>
-            </Typography>
-          )}
           {user && (
             <Typography variant="h5" sx={{ my: 1 }}>
               <Link to="/books" className='nav__link'>
@@ -62,10 +55,10 @@ function Navbar(props) {
               </Link>
             </Typography>
           )}
-          {user && (
+          {user && user.username === "admin" && (
             <Typography variant="h5" sx={{ my: 1 }}>
-              <Link to="/" className='nav__link' onClick={handleClick}>
-                Logout
+              <Link to="/users" className='nav__link'>
+                Users
               </Link>
             </Typography>
           )}
@@ -73,6 +66,13 @@ function Navbar(props) {
             <Typography variant="h5" sx={{ my: 1 }}>
               <Link to="/history" className='nav__link'>
                 History
+              </Link>
+            </Typography>
+          )}
+          {user && (
+            <Typography variant="h5" sx={{ my: 1 }}>
+              <Link to="/" className='nav__link' onClick={handleClick}>
+                Logout
               </Link>
             </Typography>
           )}
