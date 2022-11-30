@@ -13,14 +13,14 @@ export const useReturnBook = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`http://localhost:8001/user/${user.username}`, {
+    const response = await fetch(`http://localhost:8001/users/${user.username}`, {
       headers: { 'Authorization': `Bearer ${user.token}` },
     });
     const json = await response.json();
 
     const username = json.user.username;
 
-    const response2 = await fetch('http://localhost:8001/user/returnBook', {
+    const response2 = await fetch('http://localhost:8001/users/returnBook', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, name })

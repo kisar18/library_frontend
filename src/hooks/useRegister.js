@@ -11,7 +11,7 @@ export const useRegister = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch('http://localhost:8001/user/register', {
+    const response = await fetch('http://localhost:8001/users/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ first_name: firstName, last_name: lastName, birth_number: birthNumber, address, username, password })

@@ -27,7 +27,7 @@ function Profile() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:8001/user/${user.username}?page=${pageNumber}`, {
+      const response = await fetch(`http://localhost:8001/users/${user.username}?page=${pageNumber}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();

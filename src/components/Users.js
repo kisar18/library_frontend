@@ -14,6 +14,7 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
+import { useChangeUserStatus } from "../hooks/useChangeUserStatus";
 
 function Users() {
   const { user } = useAuthContext();
@@ -24,9 +25,11 @@ function Users() {
   const [usersCount, setUsersCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const { changeUserStatus, isLoading, error } = useChangeUserStatus();
+
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:8001/user?page=${pageNumber}&q=${searchTerm}&ps=${rowsPerPage}`, {
+      const response = await fetch(`http://localhost:8001/users?page=${pageNumber}&q=${searchTerm}&ps=${rowsPerPage}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();
@@ -48,6 +51,18 @@ function Users() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPageNumber(0);
+  };
+
+  const handleVerifyUser = async (username) => {
+    changeUserStatus(username, "verified");
+  };
+
+  const handleBanUser = async (username) => {
+    changeUserStatus(username, "banned");
+  };
+
+  const handleUnbanUser = async (username) => {
+    changeUserStatus(username, "unbanned");
   };
 
   return (
@@ -78,12 +93,13 @@ function Users() {
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>User</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >First name</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Last name</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Birth number</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Address</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Status</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Edit / Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => (
+            {users && users.map((user) => (
               <TableRow
                 key={user._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -91,8 +107,42 @@ function Users() {
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }} component="th" scope="row">{user.username}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.first_name}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.last_name}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.birth_number}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.address}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.account_status}</TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {user.username !== "admin" &&
+                    <Button
+                      variant='contained'
+                      color='info'
+                      sx={{ mr: { xs: 0, lg: 2 } }}
+                      onClick={() => handleVerifyUser(user.username)}
+                      disabled={isLoading}
+                    >
+                      Verify
+                    </Button>
+                  }
+                  {user.username !== "admin" &&
+                    <Button
+                      variant='contained'
+                      color='success'
+                      sx={{ mr: { xs: 0, lg: 2 } }}
+                      onClick={() => handleUnbanUser(user.username)}
+                      disabled={isLoading}
+                    >
+                      Unban
+                    </Button>
+                  }
+                  {user.username !== "admin" &&
+                    <Button
+                      variant='contained'
+                      color='error'
+                      onClick={() => handleBanUser(user.username)}
+                      disabled={isLoading}
+                    >
+                      Ban
+                    </Button>
+                  }
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -109,13 +159,12 @@ function Users() {
           />
         </Box>
       </TableContainer>
-      {user && user.username === "admin" &&
-        <Box>
-          <Button sx={{ mt: 3 }} variant='contained' color="info" size="large">
-            <Link to="/register" className='userspage__add'>Add new user</Link>
-          </Button>
-        </Box>
-      }
+      {error && <div className="error">{error}</div>}
+      <Box>
+        <Button sx={{ mt: 3 }} variant='contained' color="info" size="large">
+          <Link to="/register" className='userspage__add'>Add new user</Link>
+        </Button>
+      </Box>
     </Box>
   );
 }
