@@ -32,10 +32,25 @@ export const useBorrow = () => {
       setError(json2.error);
     }
     if (response2.ok) {
+      dispatch({ type: 'SET_BOOKS', payload: json2.books });
+    }
+
+    const response3 = await fetch('http://localhost:8001/histories', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: username, bookId: _id })
+    });
+
+    const json3 = await response3.json();
+
+    if (!response3.ok) {
+      setIsLoading(false);
+      setError(json3.error);
+    }
+
+    if (response3.ok) {
       // Update loading state
       setIsLoading(false);
-
-      dispatch({ type: 'SET_BOOKS', payload: json2.books });
     }
   };
 

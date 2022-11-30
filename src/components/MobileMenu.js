@@ -45,6 +45,13 @@ function MobileMenu(props) {
             </Link>
           </MenuItem>
         )}
+        {user && (
+          <MenuItem sx={{ borderTop: "1px solid white" }}>
+            <Link to="/books" className='mob__link'>
+              All books
+            </Link>
+          </MenuItem>
+        )}
         {user && user.username === "admin" && (
           <MenuItem sx={{ borderTop: "1px solid white" }}>
             <Link to="/users" className='mob__link'>
@@ -52,10 +59,10 @@ function MobileMenu(props) {
             </Link>
           </MenuItem>
         )}
-        {user && (
+        {user && user.username === "admin" && (
           <MenuItem sx={{ borderTop: "1px solid white" }}>
-            <Link to="/books" className='mob__link'>
-              All books
+            <Link to="/history" className='mob__link'>
+              History
             </Link>
           </MenuItem>
         )}

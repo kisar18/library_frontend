@@ -32,7 +32,7 @@ function Profile() {
       });
       const json = await response.json();
 
-      dispatch({ type: 'SET_BOOKS', payload: json.books });
+      dispatch({ type: 'SET_BOOKS', payload: json.user.books });
 
       setProfile(json.user);
       setBooksCount(json.total);
@@ -84,8 +84,7 @@ function Profile() {
             </TableHead>
             <TableBody>
               {books && books.map((book) => (
-                <TableRow
-                  key={book._id}
+                <TableRow key={book._id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell sx={{ textAlign: "center", fontSize: "16px" }} component="th" scope="row">{book.name}</TableCell>

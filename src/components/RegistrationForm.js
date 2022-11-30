@@ -16,13 +16,19 @@ function RegistrationForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error2, setError2] = useState('');
 
   const { register, error, isLoading } = useRegister();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await register(firstName, lastName, birthNumber, address, username, password);
+    if (password === confirmPassword) {
+      await register(firstName, lastName, birthNumber, address, username, password);
+    }
+    else {
+      setError2("Passwords have to match");
+    }
   };
 
   return (
@@ -102,6 +108,7 @@ function RegistrationForm() {
           />
         </Box>
         {error && <div className="error">{error}</div>}
+        {error2 && <div className="error">{error2}</div>}
         <Box sx={{ mt: 3, display: "flex" }}>
           <Typography sx={{ mr: 1 }}>
             Already have an account

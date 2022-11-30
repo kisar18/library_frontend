@@ -35,7 +35,7 @@ export const useLogin = () => {
       setIsLoading(false);
 
       // Navigate user to his profile
-      navigate("/profile");
+      navigate("/");
     }
   };
 

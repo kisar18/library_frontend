@@ -47,7 +47,7 @@ function Books() {
     if (user) {
       fetchData();
     }
-  }, [user, pageNumber, searchTerm, rowsPerPage]);
+  }, [user, pageNumber, searchTerm, rowsPerPage, dispatch]);
 
   const handleBorrow = async (_id) => {
     await borrow(_id);
@@ -119,8 +119,7 @@ function Books() {
           </TableHead>
           <TableBody>
             {books && books.map((book) => (
-              <TableRow
-                key={book._id}
+              <TableRow key={book._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }} component="th" scope="row">{book.name}</TableCell>
