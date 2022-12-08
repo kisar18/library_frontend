@@ -13,6 +13,7 @@ import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useBooksContext } from "../hooks/useBooksContext";
 import { useReturnBook } from "../hooks/useReturnBook";
+import { Link } from 'react-router-dom';
 
 function Profile() {
 
@@ -60,10 +61,16 @@ function Profile() {
 
   return (
     <Box sx={{ mt: 2, width: "100%", textAlign: "center" }}>
-      <Typography variant="h3" sx={{ my: 1, fontFamily: "cursive" }}>{profile.first_name} {profile.last_name}</Typography>
-      <Typography variant="h5" sx={{ my: 1, fontFamily: "cursive" }}>{profile.address}</Typography>
+      {profile && profile.username === "admin" &&
+        <Typography variant="h3" sx={{ my: 1, fontFamily: "cursive" }}>ADMIN</Typography>
+      }
+      {profile && profile.username !== "admin" &&
+        <Box>
+          <Typography variant="h3" sx={{ my: 1, fontFamily: "cursive" }}>{profile.first_name} {profile.last_name}</Typography>
+          <Typography variant="h5" sx={{ my: 1, fontFamily: "cursive" }}>Address: {profile.address}</Typography>
+        </Box>
+      }
       <Typography variant="h5" sx={{ my: 1, fontFamily: "cursive", textDecoration: "underline" }}>↓ Borrowed books ↓</Typography>
-
       <Box sx={{
         display: "flex",
         justifyContent: "center",
@@ -117,6 +124,9 @@ function Profile() {
           </Box>
           {error && <div className="error">{error}</div>}
         </TableContainer>
+        <Button sx={{ mt: 3 }} variant='contained' color="info" size="large">
+          <Link to="/" className='profilepage__adminborrow'>Borrow book to user</Link>
+        </Button>
       </Box>
     </Box>
   );

@@ -50,7 +50,8 @@ code {
 
 .userspage__add,
 .bookspage__add,
-.bookspage__edit {
+.bookspage__edit,
+.profilepage__adminborrow {
   text-decoration: none;
   color: white;
   font-weight: bold;

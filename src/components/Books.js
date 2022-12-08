@@ -71,6 +71,15 @@ function Books() {
     });
   };
 
+  const handleBorrowForUser = async (_id, name) => {
+    navigate("/adminBorrow", {
+      state: {
+        _id: _id,
+        bookName: name
+      }
+    });
+  };
+
   const handlePageChange = (event, newPage) => {
     setPageNumber(newPage);
   };
@@ -108,7 +117,9 @@ function Books() {
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>Book</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Author</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Publication year</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Pages</TableCell>
+              {user && user.username !== "admin" &&
+                <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Pages</TableCell>
+              }
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Image</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Quantity</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Borrow</TableCell>
@@ -125,7 +136,9 @@ function Books() {
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }} component="th" scope="row">{book.name}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.author}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.publication_year}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.pages}</TableCell>
+                {user && user.username !== "admin" &&
+                  <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{book.pages}</TableCell>
+                }
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>
                   <img
                     src={book.image}
@@ -148,6 +161,15 @@ function Books() {
                       sx={{ mr: { xs: 0, lg: 2 }, mb: { xs: 2, lg: 0 } }}
                     >
                       Edit
+                    </Button>
+                    <Button
+                      variant='contained'
+                      color='info'
+                      onClick={() => handleBorrowForUser(book._id, book.name)}
+                      disabled={isLoading || book.quantity === 0}
+                      sx={{ mr: { xs: 0, lg: 2 }, mb: { xs: 2, lg: 0 } }}
+                    >
+                      Borrow to user
                     </Button>
                     <Button
                       variant='contained'
@@ -183,7 +205,7 @@ function Books() {
           </Button>
         </Box>
       }
-    </Box>
+    </Box >
   );
 }
 

@@ -14,6 +14,7 @@ import CreateBookForm from "./components/CreateBookForm";
 import EditBookForm from "./components/EditBookForm";
 import DeleteBook from "./components/DeleteBook";
 import History from './components/History';
+import AdminBorrowForm from './components/AdminBorrowForm';
 
 function App() {
 
@@ -78,6 +79,10 @@ function App() {
         <Route
           exact path='/history'
           element={user && user.username === "admin" ? <History /> : <Navigate to="/" />}
+        />
+        <Route
+          exact path='/adminBorrow'
+          element={user && user.username === "admin" ? <AdminBorrowForm /> : <Navigate to="/" />}
         />
       </Routes>
     </BrowserRouter>

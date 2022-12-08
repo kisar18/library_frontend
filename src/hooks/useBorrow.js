@@ -9,16 +9,23 @@ export const useBorrow = () => {
   const { user } = useAuthContext();
   const { dispatch } = useBooksContext();
 
-  const borrow = async (_id) => {
+  const borrow = async (_id, userN) => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`http://localhost:8001/users/${user.username}`, {
-      headers: { 'Authorization': `Bearer ${user.token}` },
-    });
-    const json = await response.json();
+    var username;
 
-    const username = json.user.username;
+    if (userN === undefined) {
+      const response = await fetch(`http://localhost:8001/users/${user.username}`, {
+        headers: { 'Authorization': `Bearer ${user.token}` },
+      });
+      const json = await response.json();
+
+      username = json.user.username;
+    }
+    else {
+      username = userN;
+    }
 
     const response2 = await fetch('http://localhost:8001/users/borrow', {
       method: 'POST',
