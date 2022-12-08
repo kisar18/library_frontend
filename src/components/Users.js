@@ -24,12 +24,13 @@ function Users() {
   const [pageNumber, setPageNumber] = useState(0);
   const [usersCount, setUsersCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortCategory, setSortCategory] = useState("");
 
   const { changeUserStatus, isLoading, error } = useChangeUserStatus();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:8001/users?page=${pageNumber}&q=${searchTerm}&ps=${rowsPerPage}`, {
+      const response = await fetch(`http://localhost:8001/users?page=${pageNumber}&q=${searchTerm}&ps=${rowsPerPage}&s=${sortCategory}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();
@@ -42,7 +43,7 @@ function Users() {
     if (user) {
       fetchData();
     }
-  }, [user, pageNumber, searchTerm, rowsPerPage]);
+  }, [user, pageNumber, searchTerm, rowsPerPage, sortCategory]);
 
   const handlePageChange = (event, newPage) => {
     setPageNumber(newPage);
@@ -91,9 +92,18 @@ function Users() {
           <TableHead sx={{ backgroundColor: "black" }}>
             <TableRow>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>User</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >First name</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Last name</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Address</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >
+                <Button onClick={() => setSortCategory("first_name")} sx={{ color: 'white', fontWeight: "bold", textDecoration: "underline" }}>First name</Button>
+              </TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >
+                <Button onClick={() => setSortCategory("last_name")} sx={{ color: 'white', fontWeight: "bold", textDecoration: "underline" }}>Last name</Button>
+              </TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >
+                <Button onClick={() => setSortCategory("address")} sx={{ color: 'white', fontWeight: "bold", textDecoration: "underline" }}>Address</Button>
+              </TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >
+                <Button onClick={() => setSortCategory("birth_number")} sx={{ color: 'white', fontWeight: "bold", textDecoration: "underline" }}>Birth number</Button>
+              </TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Status</TableCell>
               <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Edit / Delete</TableCell>
             </TableRow>
@@ -108,6 +118,7 @@ function Users() {
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.first_name}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.last_name}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.address}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.birth_number}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "16px" }}>{user.account_status}</TableCell>
                 <TableCell sx={{ textAlign: "center" }}>
                   {user.username !== "admin" &&

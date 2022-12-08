@@ -30,10 +30,11 @@ function Books() {
   const [pageNumber, setPageNumber] = useState(0);
   const [booksCount, setBooksCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortCategory, setSortCategory] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:8001/books?page=${pageNumber}&q=${searchTerm}&ps=${rowsPerPage}`, {
+      const response = await fetch(`http://localhost:8001/books?page=${pageNumber}&q=${searchTerm}&ps=${rowsPerPage}&s=${sortCategory}`, {
         headers: { 'Authorization': `Bearer ${user.token}` },
       });
       const json = await response.json();
@@ -47,7 +48,7 @@ function Books() {
     if (user) {
       fetchData();
     }
-  }, [user, pageNumber, searchTerm, rowsPerPage, dispatch]);
+  }, [user, pageNumber, searchTerm, rowsPerPage, dispatch, sortCategory]);
 
   const handleBorrow = async (_id) => {
     await borrow(_id);
@@ -114,9 +115,15 @@ function Books() {
         <Table sx={{ minWidth: 650 }} size="medium">
           <TableHead sx={{ backgroundColor: "black" }}>
             <TableRow>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>Book</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Author</TableCell>
-              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Publication year</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>
+                <Button onClick={() => setSortCategory("name")} sx={{ color: 'white', fontWeight: "bold", textDecoration: "underline" }}>Book</Button>
+              </TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >
+                <Button onClick={() => setSortCategory("author")} sx={{ color: 'white', fontWeight: "bold", textDecoration: "underline" }}>Author</Button>
+              </TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >
+                <Button onClick={() => setSortCategory("publication_year")} sx={{ color: 'white', fontWeight: "bold", textDecoration: "underline" }}>Publication year</Button>
+              </TableCell>
               {user && user.username !== "admin" &&
                 <TableCell sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: "18px" }} >Pages</TableCell>
               }
