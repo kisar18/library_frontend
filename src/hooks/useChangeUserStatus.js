@@ -9,7 +9,7 @@ export const useChangeUserStatus = () => {
     setError(null);
 
     const response = await fetch(`http://localhost:8001/users/${username}`, {
-      method: 'PATCH',
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, newStatus })
     });
