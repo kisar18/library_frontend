@@ -51,7 +51,8 @@ code {
 .userspage__add,
 .bookspage__add,
 .bookspage__edit,
-.profilepage__adminborrow {
+.profilepage__adminborrow,
+.profilepage__edituser {
   text-decoration: none;
   color: white;
   font-weight: bold;

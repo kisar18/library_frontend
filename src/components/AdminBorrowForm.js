@@ -16,7 +16,6 @@ function AdminBorrowForm() {
 
   const handleBorrowforUser = async (e) => {
     e.preventDefault();
-    console.log("Admin borrow");
     await borrow(location.state._id, username);
   };
 

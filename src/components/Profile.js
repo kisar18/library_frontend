@@ -13,7 +13,7 @@ import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useBooksContext } from "../hooks/useBooksContext";
 import { useReturnBook } from "../hooks/useReturnBook";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
 
@@ -21,6 +21,8 @@ function Profile() {
   const [profile, setProfile] = useState({});
   const { user } = useAuthContext();
   const { returnBook, error, isLoading } = useReturnBook();
+
+  const navigate = useNavigate();
 
   const [pageNumber, setPageNumber] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -57,6 +59,14 @@ function Profile() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPageNumber(0);
+  };
+
+  const handleEditAccount = async (username) => {
+    navigate("/editUser", {
+      state: {
+        username: username
+      }
+    });
   };
 
   return (
@@ -124,9 +134,7 @@ function Profile() {
           </Box>
           {error && <div className="error">{error}</div>}
         </TableContainer>
-        <Button sx={{ mt: 3 }} variant='contained' color="info" size="large">
-          <Link to="/" className='profilepage__adminborrow'>Borrow book to user</Link>
-        </Button>
+        <Button sx={{ mt: 3 }} variant='contained' color="info" size="large" onClick={() => handleEditAccount(user.username)}>Edit account</Button>
       </Box>
     </Box>
   );
