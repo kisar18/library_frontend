@@ -32,10 +32,26 @@ export const useReturnBook = () => {
       setError(json2.error);
     }
     if (response2.ok) {
-      // Update loading state
-      setIsLoading(false);
 
       dispatch({ type: 'SET_BOOKS', payload: json2.userBooks });
+    }
+
+    const response3 = await fetch('http://localhost:8001/histories/historyItem', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: username, book: name })
+    });
+
+    const json3 = await response3.json();
+
+    if (!response3.ok) {
+      setIsLoading(false);
+      setError(json3.error);
+    }
+
+    if (response3.ok) {
+      // Update loading state
+      setIsLoading(false);
     }
   };
 
