@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { useAuthContext } from "./hooks/useAuthContext";
 import Books from "./components/Books";
@@ -20,8 +20,25 @@ import EditUserForm from './components/EditUserForm';
 function App() {
 
   const { user } = useAuthContext();
-
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("http://localhost:8001/histories/checkHistory");
+      if (response.ok) {
+        console.log("Check succeded");
+      }
+    }
+
+    const id = setInterval(function () {
+      const now = new Date();
+      if (now.getHours() === 1) {
+        fetchData();
+      }
+      else return;
+    }, 3600000);
+    return () => clearInterval(id);
+  }, []);
 
   const showMobileMenu = () => {
     setMobileMenuVisible(true);
