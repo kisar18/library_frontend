@@ -10,7 +10,7 @@ function CreateBookForm() {
   const [author, setAuthor] = useState('');
   const [publicationYear, setPublicationYear] = useState('');
   const [pages, setPages] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState('https://covers.openlibrary.org/b/isbn/<ISBN_HERE>-S.jpg');
   const [quantity, setQuantity] = useState('');
 
   const { createBook, error, isLoading } = useCreateBook();
