@@ -59,7 +59,7 @@ function MobileMenu(props) {
             </Link>
           </MenuItem>
         )}
-        {user && user.username === "admin" && (
+        {user && (
           <MenuItem sx={{ borderTop: "1px solid white" }}>
             <Link to="/history" className='mob__link'>
               History

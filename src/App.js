@@ -96,7 +96,7 @@ function App() {
         />
         <Route
           exact path='/history'
-          element={user && user.username === "admin" ? <History /> : <Navigate to="/" />}
+          element={user ? <History /> : <Navigate to="/" />}
         />
         <Route
           exact path='/adminBorrow'

@@ -62,7 +62,7 @@ function Navbar(props) {
               </Link>
             </Typography>
           )}
-          {user && user.username === "admin" && (
+          {user && (
             <Typography variant="h5" sx={{ my: 1 }}>
               <Link to="/history" className='nav__link'>
                 History
